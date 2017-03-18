@@ -1,9 +1,7 @@
 package info.mayankag.login;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,16 +37,11 @@ public class JSON_Login extends AppCompatActivity {
     }
 
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
-    }
 
     @SuppressWarnings("UnusedParameters")
     public void JSON_login(View view)
     {
-        if(isNetworkAvailable())
+        if(NetworkAvailabilityCheck.isNetworkAvailable(this))
         {
             JSONObject params = new JSONObject();
             try {
@@ -58,22 +51,28 @@ public class JSON_Login extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            final ProgressDialog progressDialog = ProgressDialog.show(this,"","Signing");
+
             final String JSON_login_url = getResources().getString(R.string.JSON_login_url);
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,JSON_login_url, params, new Response.Listener<JSONObject>() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onResponse(JSONObject response) {
+                    progressDialog.dismiss();
                     try {
-                        Toast.makeText(JSON_Login.this,response.getString("message"),Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        Toast.makeText(JSON_Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (response.getString("message").equals("Success"))
+                            Toast.makeText(JSON_Login.this, R.string.login_success_toast, Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(JSON_Login.this, R.string.login_failed_toast, Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
                     Toast.makeText(JSON_Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }) {

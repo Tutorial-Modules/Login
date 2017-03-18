@@ -1,8 +1,6 @@
 package info.mayankag.login;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,19 +32,16 @@ public class POST_String_Login extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password_POST);
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
-    }
-
     public void POST_login(View view) {
-        if(isNetworkAvailable())
+        if(NetworkAvailabilityCheck.isNetworkAvailable(this))
         {
+            final ProgressDialog progressDialog = ProgressDialog.show(this,"","Signing");
+
             String POST_login_url = getResources().getString(R.string.POST_login_url);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, POST_login_url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    progressDialog.dismiss();
                     try {
                         if (response.equals("Success"))
                             Toast.makeText(POST_String_Login.this, R.string.login_success_toast, Toast.LENGTH_SHORT).show();
@@ -59,6 +54,8 @@ public class POST_String_Login extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
+                    error.printStackTrace();
                 }
             }) {
                 @Override
