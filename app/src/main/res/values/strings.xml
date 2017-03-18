@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Login</string>
+
+    <string name="GET_login_url">http://139.59.31.115/Module/Login_GET_String_Parameter.php</string>
+    <string name="POST_login_url">http://139.59.31.115/Module/Login_POST_String_Parameter.php</string>
+    <string name="JSON_login_url">http://139.59.31.115/Module/Login_JSON_Parameter.php</string>
+
+    <string name="internet_not_connected_message">Internet Not Connected. Please connect to internet and then try again</string>
+    <string name="login_success_toast">Login Successful</string>
+    <string name="login_failed_toast">Login Failed</string>
+
+    <string name="email_hint">Enter email</string>
+    <string name="pass_hint">Enter password</string>
+    <string name="login_button">Login</string>
+</resources>
