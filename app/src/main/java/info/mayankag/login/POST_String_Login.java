@@ -22,7 +22,8 @@ import java.util.Map;
 
 public class POST_String_Login extends AppCompatActivity {
 
-    EditText email,password;
+    private EditText email;
+    private EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class POST_String_Login extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password_POST);
     }
 
-    boolean isNetworkAvailable() {
+    private boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();

@@ -11,4 +11,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="info.mayankag.login.MainActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <Button
+            android:id="@+id/post_select"
+            android:text="@string/post_request_button_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:onClick="Selection"/>
+
+        <Button
+            android:id="@+id/json_select"
+            android:text="@string/json_request_button_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:onClick="Selection"/>
+
+    </LinearLayout>
+
 </RelativeLayout>
